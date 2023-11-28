@@ -19,6 +19,22 @@ h2 {
     font-size: 24px;
 }
 
+.question-container {
+    text-align: center;
+    color: white;
+    margin: 0;
+    padding: 16px;
+    font-size: 24px;
+}
+
+.answer-options {
+    text-align: center;
+    color: white;
+    margin: 0;
+    font-size: 24px;
+    word-spacing: 10px;
+}
+
 .tiles {
     margin: 48px auto;
     width: max-content;

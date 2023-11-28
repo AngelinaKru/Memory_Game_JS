@@ -51,7 +51,7 @@ function buildTile(imageSrc) {
             awaitingEndOfMove = false;
 
             revealedCount += 2;
-
+            Question(imageSrc);
             // If all tiles are revealed (game is won)
             if (revealedCount === tileCount) {
                 alert("You won!");
@@ -86,4 +86,53 @@ for (let i = 0; i < tileCount; i++) {
     imagesPickList.splice(randomIndex, 1);
     tilesContainer.appendChild(tile);
 }
+
+
+function Question(imageSource) {
+    let question = document.querySelector(".question-container");
+    let answerOptions = document.querySelector(".answer-options");
+    let correctAnswer = document.getElementById("correct");
+    let incorrectAnswer = document.getElementById("incorrect");
+
+    if (imageSource === "images/christian.png") {
+        question.innerHTML = "Onko se Christian?";
+        correctAnswer.innerHTML = "Kyllä";
+        incorrectAnswer.innerHTML = "Ei";
+    } else if (imageSource === "images/heidi.png") {
+        question.innerHTML = "Is she a nurse?";
+        correctAnswer.innerHTML = "Kyllä";
+        incorrectAnswer.innerHTML = "Ei";
+    } else if (imageSource === "images/karoliina.png") {
+        question.innerHTML = "Is she a teacher?";
+        correctAnswer.innerHTML = "Kyllä";
+        incorrectAnswer.innerHTML = "Ei";
+    }
+
+    correctAnswer.addEventListener("click", () => {
+        question.innerHTML = "Correct!";
+        answerOptions.style.color = "green";
+
+        setTimeout(() => {
+            question.style.display = "none";
+            answerOptions.style.display = "none";
+          }, 5000);
+    });
+
+    incorrectAnswer.addEventListener("click", () => {
+        question.innerHTML = "Incorrect!";
+        answerOptions.style.color = "red";
+
+        if (imageSource === "images/christian.png") {
+            question.innerHTML = "Toimii kouluttajana ICT alalla. Ylläpitää myös ICT:n yksikön opetusverkkoa.";
+        }
+
+        setTimeout(() => {
+            question.style.display = "none";
+            answerOptions.style.display = "none";
+          }, 5000);
+      });
+    
+      question.style.display = "block";
+      answerOptions.style.display = "block";
+    }
 
