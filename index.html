@@ -6,18 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Memory game</title>
 <link rel="stylesheet" href="main.css">
-<!-- defer -A script that will be downloaded in parallel to parsing the page,
-    and executed after the page has finished parsing -->
-<script src="main.js" defer></script>
+
 </head>
 <body>
     <h1>Taitotalo Memory game</h1>
-    <h2>Try to remember the people face, that are going to be with you next 2 years!</h2>
+    <h2>Try to remember the people face and names, <br> are going to be with you next 2 years!</h2>
 <div class="tiles"></div>
-<div class="question-container"  ></div>
-<div hidden class="answer-options">
-  <button class="answer-option" id="correct">Correct</button>
-  <button class="answer-option" id="incorrect">Incorrect</button>
+<p id="tryAgain">Try again!</p>
+<div class="question">
+<label id="question-container"> Mikä hänen nimensä on?</label> <br>
+<input type="text" id="teacherName"><br>
+<button class="submitButton" id="submitBtn">Submit</button>
 </div>
+
+</div>
+<!-- defer -A script that will be downloaded in parallel to parsing the page,
+    and executed after the page has finished parsing -->
+    <script src="main.js" defer></script>
 </body>
 </html>

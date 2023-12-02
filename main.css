@@ -19,14 +19,23 @@ h2 {
     font-size: 24px;
 }
 
-.question-container {
+.question{
     text-align: center;
     color: white;
     margin: 0;
     padding: 16px;
     font-size: 24px;
+    display: none;
 }
 
+p#tryAgain {
+    text-align: center;
+    color: red;
+    margin: 0;
+    padding: 16px;
+    font-size: 24px;
+    display: none;
+}
 .answer-options {
     text-align: center;
     color: white;

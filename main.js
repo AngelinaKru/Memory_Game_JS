@@ -87,52 +87,122 @@ for (let i = 0; i < tileCount; i++) {
     tilesContainer.appendChild(tile);
 }
 
+ function Question(event, imageSrc) { 
+    let question = document.querySelector(".question");
+    let tryAgain = document.getElementById("tryAgain");
+    question.style.display = "block";
 
-function Question(imageSource) {
-    let question = document.querySelector(".question-container");
-    let answerOptions = document.querySelector(".answer-options");
-    let correctAnswer = document.getElementById("correct");
-    let incorrectAnswer = document.getElementById("incorrect");
+    let answer = document.getElementById("teacherName").value; // Get the value of the input field
+        
+        //let answer = document.getElementById("teacherName").value;
+        if (imageSrc === "images/christian.png") {
 
-    if (imageSource === "images/christian.png") {
-        question.innerHTML = "Onko se Christian?";
-        correctAnswer.innerHTML = "Kyllä";
-        incorrectAnswer.innerHTML = "Ei";
-    } else if (imageSource === "images/heidi.png") {
-        question.innerHTML = "Is she a nurse?";
-        correctAnswer.innerHTML = "Kyllä";
-        incorrectAnswer.innerHTML = "Ei";
-    } else if (imageSource === "images/karoliina.png") {
-        question.innerHTML = "Is she a teacher?";
-        correctAnswer.innerHTML = "Kyllä";
-        incorrectAnswer.innerHTML = "Ei";
-    }
-
-    correctAnswer.addEventListener("click", () => {
-        question.innerHTML = "Correct!";
-        answerOptions.style.color = "green";
-
-        setTimeout(() => {
-            question.style.display = "none";
-            answerOptions.style.display = "none";
-          }, 5000);
-    });
-
-    incorrectAnswer.addEventListener("click", () => {
-        question.innerHTML = "Incorrect!";
-        answerOptions.style.color = "red";
-
-        if (imageSource === "images/christian.png") {
-            question.innerHTML = "Toimii kouluttajana ICT alalla. Ylläpitää myös ICT:n yksikön opetusverkkoa.";
+            if (answer === "Christian" || answer === "christian" || answer === "chris") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
         }
+        else if (imageSrc === "images/heidi.png") {
+            if (answer === "Heidi" || answer === "heidi") {
 
-        setTimeout(() => {
-            question.style.display = "none";
-            answerOptions.style.display = "none";
-          }, 5000);
-      });
-    
-      question.style.display = "block";
-      answerOptions.style.display = "block";
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
+        }
+        else if (imageSrc === "images/karoliina.png") {
+
+            if (answer === "Karoliina" || answer === "karoliina") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
+        }
+        else if (imageSrc === "images/kerttuli.png") {
+
+            if (answer === "Kerttuli" || answer === "kerttuli") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
+        }
+        else if (imageSrc === "images/lauri.png") {
+            if (answer === "Lauri" || answer === "lauri") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
+        }
+        else if (imageSrc === "images/maarit.png") {
+            if (answer === "Maarit" || answer === "maarit") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
+        }
+        else if (imageSrc === "images/olli.png") {
+            if (answer === "Olli" || answer === "olli") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            } else {
+                tryAgain.style.display = "block";
+                question.style.display = "block";
+            }
+        }
+        else if (imageSrc === "images/taitotalo.png") {
+            if (answer === "Taitotalo" || answer === "taitotalo") {
+                question.innerHTML = "Correct!";
+                question.style.color = "green";
+                tryAgain.style.display = "none";
+                setTimeout(() => {
+                    question.style.display = "none";
+                }, 3000);
+            }
+        }
     }
 
+    let submitButton = document.getElementById("submitBtn");
+    submitButton.addEventListener("click", (event) => {
+        Question(event, imageSrc);
+    });
