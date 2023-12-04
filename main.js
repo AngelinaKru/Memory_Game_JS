@@ -10,6 +10,7 @@ let activeTile = null;
 /* awaiting end of move is true, it means
 the user is waiting for the two unmatched tiles to be turned over again */
 let awaitingEndOfMove = false;
+let awaitingAnswer = false;
 
 function buildTile(imageSrc) {
     const element = document.createElement("div");
@@ -49,13 +50,10 @@ function buildTile(imageSrc) {
             // If a player chose a correct tile, we are going to clear the game state
             activeTile = null;
             awaitingEndOfMove = false;
-
-            revealedCount += 2;
-            Question(imageSrc);
-            // If all tiles are revealed (game is won)
-            if (revealedCount === tileCount) {
-                alert("You won!");
-            }
+            element.setAttribute("data-clicked-image", imageSrc);
+            console.log('Clicked image source:', imageSrc);
+            Question();
+            awaitingAnswer = true; // Set a flag to indicate awaiting user input  
             return;
         }
 
@@ -87,122 +85,259 @@ for (let i = 0; i < tileCount; i++) {
     tilesContainer.appendChild(tile);
 }
 
- function Question(event, imageSrc) { 
+function Question() {
     let question = document.querySelector(".question");
-    let tryAgain = document.getElementById("tryAgain");
     question.style.display = "block";
+}
 
-    let answer = document.getElementById("teacherName").value; // Get the value of the input field
-        
-        //let answer = document.getElementById("teacherName").value;
-        if (imageSrc === "images/christian.png") {
+const submitButton = document.getElementById("submitBtn");
+submitButton.addEventListener("click", () => {
+    if(awaitingAnswer) {
+        Answer();
+        awaitingAnswer = false; // Reset the flag after evaluating the answer
+    }
+});
 
-            if (answer === "Christian" || answer === "christian" || answer === "chris") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/heidi.png") {
-            if (answer === "Heidi" || answer === "heidi") {
+/*function Answer() {
+    let answer = document.getElementById("teacherName").value;
+    let tryAgain = document.getElementById("tryAgain");
+    let clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
+    let question = document.querySelector(".question");
+    if (clickedTile) {
+        let imageSrc = clickedTile.getAttribute("data-clicked-image");
 
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/karoliina.png") {
-
-            if (answer === "Karoliina" || answer === "karoliina") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/kerttuli.png") {
-
-            if (answer === "Kerttuli" || answer === "kerttuli") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/lauri.png") {
-            if (answer === "Lauri" || answer === "lauri") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/maarit.png") {
-            if (answer === "Maarit" || answer === "maarit") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/olli.png") {
-            if (answer === "Olli" || answer === "olli") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            } else {
-                tryAgain.style.display = "block";
-                question.style.display = "block";
-            }
-        }
-        else if (imageSrc === "images/taitotalo.png") {
-            if (answer === "Taitotalo" || answer === "taitotalo") {
-                question.innerHTML = "Correct!";
-                question.style.color = "green";
-                tryAgain.style.display = "none";
-                setTimeout(() => {
-                    question.style.display = "none";
-                }, 3000);
-            }
+    if (imageSrc === "images/christian.png") {
+        if (answer === "Christian" || answer === "christian" || answer === "chris") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
         }
     }
+    else if (imageSrc === "images/heidi.png") {
+        if (answer === "Heidi" || answer === "heidi") {
 
-    let submitButton = document.getElementById("submitBtn");
-    submitButton.addEventListener("click", (event) => {
-        Question(event, imageSrc);
-    });
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+    else if (imageSrc === "images/karoliina.png") {
+
+        if (answer === "Karoliina" || answer === "karoliina") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+    else if (imageSrc === "images/kerttuli.png") {
+
+        if (answer === "Kerttuli" || answer === "kerttuli") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+    else if (imageSrc === "images/lauri.png") {
+        if (answer === "Lauri" || answer === "lauri") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+    else if (imageSrc === "images/maarit.png") {
+        if (answer === "Maarit" || answer === "maarit") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+    else if (imageSrc === "images/olli.png") {
+        if (answer === "Olli" || answer === "olli") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+    else if (imageSrc === "images/taitotalo.png") {
+        if (answer === "Taitotalo" || answer === "taitotalo") {
+            question.innerHTML = "Correct!";
+            question.style.color = "green";
+            tryAgain.style.display = "none";
+            setTimeout(() => {
+                question.style.display = "none";
+            }, 3000);
+        } else {
+            tryAgain.style.display = "block";
+            question.style.display = "block";
+        }
+    }
+}}*/
+
+/*function Answer() {
+    let answer = document.getElementById("teacherName").value.toLowerCase(); // Convert answer to lowercase for case-insensitive comparison
+    let tryAgain = document.getElementById("tryAgain");
+    let clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
+    let question = document.querySelector(".question");
+
+    if (clickedTile) {
+        let imageSrc = clickedTile.getAttribute("data-clicked-image");
+        console.log('Clicked image source:', imageSrc); // Log the clicked image source
+        console.log('User answer:', answer);
+
+        switch (imageSrc) {
+            case "images/christian.png":
+                if (answer === "christian" || answer === "chris") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+            case "images/heidi.png":
+                if (answer === "heidi") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+             case "images/maarit.png":
+                    if (answer === "maarit") {
+                        showCorrectMessage(question, tryAgain);
+                    } else {
+                        showIncorrectMessage(question, tryAgain);
+                    }
+                    break;
+            case "images/karoliina.png":
+                if (answer === "karoliina") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+            case "images/kerttuli.png":
+                if (answer === "kerttuli") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+            case "images/lauri.png":
+                if (answer === "lauri") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+            case "images/olli.png":
+                if (answer === "olli") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+            case "images/taitotalo.png":
+                if (answer === "taitotalo") {
+                    showCorrectMessage(question, tryAgain);
+                } else {
+                    showIncorrectMessage(question, tryAgain);
+                }
+                break;
+        }
+    }
+}*/
+
+function Answer() {
+    const answer = document.getElementById("teacherName").value.trim().toLowerCase();
+    const tryAgain = document.getElementById("tryAgain");
+    const clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
+    const question = document.querySelector(".question");
+
+    if (clickedTile) {
+        const imageSrc = clickedTile.getAttribute("data-clicked-image");
+
+        const answerMap = {
+            "images/christian.png": ["christian", "chris"],
+            "images/heidi.png": ["heidi"],
+            "images/karoliina.png": ["karoliina"],
+            "images/kerttuli.png": ["kerttuli"],
+            "images/lauri.png": ["lauri"],
+            "images/maarit.png": ["maarit"],
+            "images/olli.png": ["olli"],
+            "images/taitotalo.png": ["taitotalo"]
+        };
+
+        if (answerMap[imageSrc] && answerMap[imageSrc].includes(answer)) {
+            showCorrectMessage(question, tryAgain);
+            updateRevealedCount();
+            checkWinCondition();
+        } else {
+            showIncorrectMessage(question, tryAgain);
+        }
+    }
+}
+
+function showCorrectMessage(question, tryAgain) {
+    question.innerHTML = "Correct!";
+    question.style.color = "green";
+    tryAgain.style.display = "none";
+    setTimeout(() => {
+        question.style.display = "none";
+        awaitingAnswer = false; // Reset the flag after hiding the message
+    }, 3000);
+}
+
+function showIncorrectMessage(question, tryAgain) {
+    tryAgain.style.display = "block";
+    question.style.display = "block";
+}
+
+function updateRevealedCount() {
+    revealedCount += 2; // Increment revealedCount only when a pair is matched
+}
+
+function checkWinCondition() {
+    if (revealedCount === tileCount) {
+        alert("You won!");
+    }
+}
