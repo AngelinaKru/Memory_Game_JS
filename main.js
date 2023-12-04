@@ -52,8 +52,8 @@ function buildTile(imageSrc) {
             awaitingEndOfMove = false;
             element.setAttribute("data-clicked-image", imageSrc);
             console.log('Clicked image source:', imageSrc);
-            Question();
             awaitingAnswer = true; // Set a flag to indicate awaiting user input  
+            Question();
             return;
         }
 
@@ -86,15 +86,17 @@ for (let i = 0; i < tileCount; i++) {
 }
 
 function Question() {
-    let question = document.querySelector(".question");
-    question.style.display = "block";
+    const question = document.getElementById("questionContainer");
+    question.style.display = "block"; // Show the question container again
+    console.log('Question fucntion called');
 }
 
 const submitButton = document.getElementById("submitBtn");
 submitButton.addEventListener("click", () => {
     if(awaitingAnswer) {
-        Answer();
         awaitingAnswer = false; // Reset the flag after evaluating the answer
+        console.log('submit button clicked');
+        Answer();
     }
 });
 
@@ -292,6 +294,7 @@ function Answer() {
     const tryAgain = document.getElementById("tryAgain");
     const clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
     const question = document.querySelector(".question");
+    console.log('answer function called');
 
     if (clickedTile) {
         const imageSrc = clickedTile.getAttribute("data-clicked-image");
@@ -308,11 +311,13 @@ function Answer() {
         };
 
         if (answerMap[imageSrc] && answerMap[imageSrc].includes(answer)) {
+            console.log(answer);
             showCorrectMessage(question, tryAgain);
             updateRevealedCount();
             checkWinCondition();
         } else {
             showIncorrectMessage(question, tryAgain);
+            console.log(answer);
         }
     }
 }
@@ -321,15 +326,27 @@ function showCorrectMessage(question, tryAgain) {
     question.innerHTML = "Correct!";
     question.style.color = "green";
     tryAgain.style.display = "none";
+    console.log("showCorrectMessage function called");
+    // Reset the question content and style after a delay
     setTimeout(() => {
-        question.style.display = "none";
+        question.innerHTML = "";
+        question.style.color = ""; // Reset the color
         awaitingAnswer = false; // Reset the flag after hiding the message
-    }, 3000);
+        question.style.display = "block"; // Show the question container again
+    }, 3000); 
 }
 
 function showIncorrectMessage(question, tryAgain) {
     tryAgain.style.display = "block";
     question.style.display = "block";
+    console.log("showInCorrectMessage function called");
+     // Reset the question content and style after a delay
+     setTimeout(() => {
+        question.innerHTML = "";
+        question.style.color = ""; // Reset the color
+        awaitingAnswer = false; // Reset the flag after hiding the message
+        question.style.display = "block"; // Show the question container again
+    }, 3000); 
 }
 
 function updateRevealedCount() {
