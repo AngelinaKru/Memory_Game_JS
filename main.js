@@ -2,6 +2,19 @@ const tilesContainer = document.querySelector(".tiles");
 const images = ['images/christian.png', 'images/heidi.png', 'images/karoliina.png', 'images/kerttuli.png', 'images/lauri.png', 'images/maarit.png', 'images/olli.png', 'images/taitotalo.png'];
 const imagesPickList = [...images, ...images];
 const tileCount = imagesPickList.length;
+const answerMap = {
+    "images/christian.png": ["christian", "chris", "chrisu"],
+    "images/heidi.png": ["heidi"],
+    "images/karoliina.png": ["karoliina"],
+    "images/kerttuli.png": ["kerttuli"],
+    "images/lauri.png": ["lauri"],
+    "images/maarit.png": ["maarit"],
+    "images/olli.png": ["olli"],
+    "images/taitotalo.png": ["taitotalo"]
+};
+const messageElement = document.getElementById("message");
+const questionElement = document.getElementById("questionContainer");
+const inputElement = document.getElementById("teacherName");
 
 // Game state
 let revealedCount = 0;
@@ -28,7 +41,7 @@ function buildTile(imageSrc) {
         // If two tiles are clicked, the function will be called
         // If you want to click a revelead tile again, you can't (we need to cancel this move)
         // If you want to click an active tile again, you can't (we need to cancel this move)
-        if (awaitingEndOfMove || revelead === "true" || element === activeTile) {
+        if (awaitingEndOfMove || revelead === "true" || element === activeTile || awaitingAnswer) {
             // Return means, that we are going to exit the function
             return;
         }
@@ -48,12 +61,10 @@ function buildTile(imageSrc) {
             activeTile.setAttribute("data-revealed", "true");
             element.setAttribute("data-revealed", "true");
             // If a player chose a correct tile, we are going to clear the game state
-            activeTile = null;
+            // activeTile = null;
             awaitingEndOfMove = false;
-            element.setAttribute("data-clicked-image", imageSrc);
-            console.log('Clicked image source:', imageSrc);
             awaitingAnswer = true; // Set a flag to indicate awaiting user input  
-            Question();
+            showQuestion(); // Show the question container again
             return;
         }
 
@@ -85,276 +96,66 @@ for (let i = 0; i < tileCount; i++) {
     tilesContainer.appendChild(tile);
 }
 
-function Question() {
-    const question = document.getElementById("questionContainer");
-    question.style.display = "block"; // Show the question container again
-    console.log('Question fucntion called');
-}
-
 const submitButton = document.getElementById("submitBtn");
 submitButton.addEventListener("click", () => {
     if(awaitingAnswer) {
-        awaitingAnswer = false; // Reset the flag after evaluating the answer
-        console.log('submit button clicked');
         Answer();
     }
 });
 
-/*function Answer() {
-    let answer = document.getElementById("teacherName").value;
-    let tryAgain = document.getElementById("tryAgain");
-    let clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
-    let question = document.querySelector(".question");
-    if (clickedTile) {
-        let imageSrc = clickedTile.getAttribute("data-clicked-image");
-
-    if (imageSrc === "images/christian.png") {
-        if (answer === "Christian" || answer === "christian" || answer === "chris") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/heidi.png") {
-        if (answer === "Heidi" || answer === "heidi") {
-
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/karoliina.png") {
-
-        if (answer === "Karoliina" || answer === "karoliina") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/kerttuli.png") {
-
-        if (answer === "Kerttuli" || answer === "kerttuli") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/lauri.png") {
-        if (answer === "Lauri" || answer === "lauri") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/maarit.png") {
-        if (answer === "Maarit" || answer === "maarit") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/olli.png") {
-        if (answer === "Olli" || answer === "olli") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-    else if (imageSrc === "images/taitotalo.png") {
-        if (answer === "Taitotalo" || answer === "taitotalo") {
-            question.innerHTML = "Correct!";
-            question.style.color = "green";
-            tryAgain.style.display = "none";
-            setTimeout(() => {
-                question.style.display = "none";
-            }, 3000);
-        } else {
-            tryAgain.style.display = "block";
-            question.style.display = "block";
-        }
-    }
-}}*/
-
-/*function Answer() {
-    let answer = document.getElementById("teacherName").value.toLowerCase(); // Convert answer to lowercase for case-insensitive comparison
-    let tryAgain = document.getElementById("tryAgain");
-    let clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
-    let question = document.querySelector(".question");
-
-    if (clickedTile) {
-        let imageSrc = clickedTile.getAttribute("data-clicked-image");
-        console.log('Clicked image source:', imageSrc); // Log the clicked image source
-        console.log('User answer:', answer);
-
-        switch (imageSrc) {
-            case "images/christian.png":
-                if (answer === "christian" || answer === "chris") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-            case "images/heidi.png":
-                if (answer === "heidi") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-             case "images/maarit.png":
-                    if (answer === "maarit") {
-                        showCorrectMessage(question, tryAgain);
-                    } else {
-                        showIncorrectMessage(question, tryAgain);
-                    }
-                    break;
-            case "images/karoliina.png":
-                if (answer === "karoliina") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-            case "images/kerttuli.png":
-                if (answer === "kerttuli") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-            case "images/lauri.png":
-                if (answer === "lauri") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-            case "images/olli.png":
-                if (answer === "olli") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-            case "images/taitotalo.png":
-                if (answer === "taitotalo") {
-                    showCorrectMessage(question, tryAgain);
-                } else {
-                    showIncorrectMessage(question, tryAgain);
-                }
-                break;
-        }
-    }
-}*/
 
 function Answer() {
-    const answer = document.getElementById("teacherName").value.trim().toLowerCase();
-    const tryAgain = document.getElementById("tryAgain");
-    const clickedTile = document.querySelector('.tile[data-revealed="true"][data-clicked-image]');
-    const question = document.querySelector(".question");
-    console.log('answer function called');
+    const answer = inputElement.value.trim().toLowerCase();
+    imageSrc = activeTile.getAttribute("data-image")
 
-    if (clickedTile) {
-        const imageSrc = clickedTile.getAttribute("data-clicked-image");
-
-        const answerMap = {
-            "images/christian.png": ["christian", "chris"],
-            "images/heidi.png": ["heidi"],
-            "images/karoliina.png": ["karoliina"],
-            "images/kerttuli.png": ["kerttuli"],
-            "images/lauri.png": ["lauri"],
-            "images/maarit.png": ["maarit"],
-            "images/olli.png": ["olli"],
-            "images/taitotalo.png": ["taitotalo"]
-        };
-
-        if (answerMap[imageSrc] && answerMap[imageSrc].includes(answer)) {
-            console.log(answer);
-            showCorrectMessage(question, tryAgain);
-            updateRevealedCount();
-            checkWinCondition();
-        } else {
-            showIncorrectMessage(question, tryAgain);
-            console.log(answer);
+    hideQuestion();
+    if (answerMap[imageSrc].includes(answer)) {
+        showCorrectMessage();
+        revealedCount += 2; // Increment revealedCount only when a pair is matched
+        if (revealedCount === tileCount) {
+            alert("You won!");
         }
+    } else {
+        showIncorrectMessage();
     }
 }
 
-function showCorrectMessage(question, tryAgain) {
-    question.innerHTML = "Correct!";
-    question.style.color = "green";
-    tryAgain.style.display = "none";
-    console.log("showCorrectMessage function called");
-    // Reset the question content and style after a delay
+function showCorrectMessage() {
+    messageElement.style.color = "green";
+    messageElement.textContent = "Correct!";
+    showMessage();
+    activeTile = null;
+    awaitingAnswer = false; // Reset the flag after the correct answer
     setTimeout(() => {
-        question.innerHTML = "";
-        question.style.color = ""; // Reset the color
-        awaitingAnswer = false; // Reset the flag after hiding the message
-        question.style.display = "block"; // Show the question container again
+        hideMessage();
     }, 3000); 
 }
 
-function showIncorrectMessage(question, tryAgain) {
-    tryAgain.style.display = "block";
-    question.style.display = "block";
-    console.log("showInCorrectMessage function called");
-     // Reset the question content and style after a delay
+function showIncorrectMessage(question) {
+    messageElement.style.color = "red";
+    messageElement.textContent = 'Incorrect! Try again...'
+    showMessage();
      setTimeout(() => {
-        question.innerHTML = "";
-        question.style.color = ""; // Reset the color
-        awaitingAnswer = false; // Reset the flag after hiding the message
-        question.style.display = "block"; // Show the question container again
+        showQuestion(); // Show the question container again
+    }, 1000); 
+     setTimeout(() => {
+        hideMessage();
     }, 3000); 
 }
 
-function updateRevealedCount() {
-    revealedCount += 2; // Increment revealedCount only when a pair is matched
+function showMessage() {
+    messageElement.style.visibility = 'visible';
 }
 
-function checkWinCondition() {
-    if (revealedCount === tileCount) {
-        alert("You won!");
-    }
+function hideMessage() {
+    messageElement.style.visibility = 'hidden';
+}
+
+function showQuestion() {
+    inputElement.value = '';
+    questionElement.style.visibility = 'visible';
+}
+
+function hideQuestion() {
+    questionElement.style.visibility = 'hidden';
 }
