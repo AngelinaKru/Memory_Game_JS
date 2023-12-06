@@ -1,3 +1,16 @@
+// Get elements from the DOM
+const menu = document.querySelector('.startMenu');
+const game = document.querySelector('.game');
+const startButton = document.getElementById('startBtn');
+
+function startGame() {
+  // Hide the menu and display the game
+  menu.style.display = 'none';
+  game.style.display = 'block';
+}
+
+startButton.addEventListener('click', startGame);
+
 const tilesContainer = document.querySelector(".tiles");
 const images = ['images/christian.png', 'images/heidi.png', 'images/karoliina.png', 'images/kerttuli.png', 'images/lauri.png', 'images/maarit.png', 'images/olli.png', 'images/taitotalo.png'];
 const imagesPickList = [...images, ...images];
