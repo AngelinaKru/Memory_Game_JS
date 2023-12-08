@@ -57,6 +57,10 @@ the user is waiting for the two unmatched tiles to be turned over again */
 let awaitingEndOfMove = false;
 let awaitingAnswer = false;
 
+// Score
+let score = 0;
+let incorrectAttempts = 0;
+
 
 function buildTile(imageSrc) {
     const element = document.createElement("div");
@@ -93,6 +97,7 @@ function buildTile(imageSrc) {
         if (imageToMatch === imageSrc) {
             activeTile.setAttribute("data-revealed", "true");
             element.setAttribute("data-revealed", "true");
+            handleMatch();
             // If a player chose a correct tile, we are going to clear the game state
             // activeTile = null;
             awaitingEndOfMove = false;
@@ -103,7 +108,6 @@ function buildTile(imageSrc) {
 
         // If a player chose an incorrect tile
         awaitingEndOfMove = true;
-
         // Hide tiles after 1 second
         setTimeout(() => {
             element.style.backgroundImage = null; // Just clicked tile
@@ -112,6 +116,8 @@ function buildTile(imageSrc) {
             // Reset the active tile, because we are going to start a new move
             awaitingEndOfMove = false;
             activeTile = null;
+
+            handleMismatch();
         }, 1000); // after 1 second (1 second = 1000 milliseconds)
     });
 
@@ -131,7 +137,7 @@ for (let i = 0; i < tileCount; i++) {
 
 const submitButton = document.getElementById("submitBtn");
 submitButton.addEventListener("click", () => {
-    if(awaitingAnswer) {
+    if (awaitingAnswer) {
         Answer();
     }
 });
@@ -146,7 +152,7 @@ function Answer() {
         showCorrectMessage();
         revealedCount += 2; // Increment revealedCount only when a pair is matched
         if (revealedCount === tileCount) {
-            alert("You won!");
+            alert("You won! Your score is " + score + " points!");
         }
     } else {
         showIncorrectMessage();
@@ -159,21 +165,23 @@ function showCorrectMessage() {
     showMessage();
     activeTile = null;
     awaitingAnswer = false; // Reset the flag after the correct answer
+    handleMatch();
     setTimeout(() => {
         hideMessage();
-    }, 3000); 
+    }, 3000);
 }
 
 function showIncorrectMessage(question) {
     messageElement.style.color = "red";
     messageElement.textContent = 'Incorrect! Try again...'
     showMessage();
-     setTimeout(() => {
+    handleMismatch();
+    setTimeout(() => {
         showQuestion(); // Show the question container again
-    }, 1000); 
-     setTimeout(() => {
+    }, 1000);
+    setTimeout(() => {
         hideMessage();
-    }, 3000); 
+    }, 3000);
 }
 
 function showMessage() {
@@ -191,4 +199,20 @@ function showQuestion() {
 
 function hideQuestion() {
     questionElement.style.visibility = 'hidden';
+}
+
+function handleMatch() {
+    score += 10;
+    updateScore();
+}
+
+function handleMismatch() {
+    score -= 5; // Penalty for incorrect match
+    updateScore();
+}
+
+// Function to update the score display
+function updateScore() {
+    const scoreElement = document.getElementById('score');
+    scoreElement.textContent = `${score}`;
 }

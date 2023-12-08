@@ -130,3 +130,20 @@ p#message {
     background-size: cover;
     background-position: center;
 }
+
+#scoreDisplay {
+  font-size: 24px;
+  font-weight: bold;
+  color: yellow; /* Adjust color as needed */
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-top: 50px;
+}
+
+#scoreInstruction {
+  font-size: 20px;
+  color: yellow; /* Adjust color as needed */
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
