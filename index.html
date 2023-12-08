@@ -12,9 +12,76 @@
 <body>
     <div class="startMenu">
         <h1>Taitotalo Memory game</h1>
-        <h2>Try to remember the people face and names! <br> They are going to be with you next 2 years!</h2>
+        <h2>Try to remember the people face and names! <br> They are going to be with you next 2 years!</h2><br>
         <button class="startButton" id="startBtn">Start</button>
     </div>
+
+    <div class="cardScene1" id="cardSceneId1" style="display: none;" >
+        <!-- Display all possible cards with images and descriptions -->
+        <div class="personCard">
+            <img src="images/christian.png" alt="Christian">
+            <div class="textInfo">
+                <p><b>Chirstian. </b> <br>
+                <i>Chirstian Toimii kouluttajana ICT alalla. Ylläpittää myös ICT:n yksikön opetusverkkoa.</i></p>
+            </div>
+        </div>
+        <div class="personCard">
+            <img src="images/karoliina.png" alt="Karoliina">
+            <div class="textInfo">
+                <p><b>Karoliina. </b> <br>
+                <i>Toimii media-alan ja liiketoiminnan kouluttajan tehtävissä Taitotalon ICT & Media -yksikössä. Erikoisosaamisena digitaalinen markkinointi, järjestelmäosaaminen, some ja pelit.</i></p>
+            </div>
+        </div>
+        <div class="personCard">
+            <img src="images/kerttuli.png" alt="Kerttuli">
+            <div class="textInfo">
+                <p><b>Kerttuli.</b> <br>
+                <i>Pääsääntöisesti kouluttaa Tieto- ja viestintätekniikan perustutkintoa ohjelmoinnin tutkinnon osaa.
+                    Erityisesti ohjelmoinnin perusteet Pythonilla ja data-analytiikka. </i></p>
+            </div>
+        </div>
+        <div class="personCard">
+            <img src="images/lauri.png" alt="lauri">
+            <div class="textInfo">
+                <p><b>Lauri.</b> <br>
+                <i>Kouluttaa Tieto- ja viestintätekniikan perustutkintoa ohjelmoinnin tutkinnon osaa.</i></p>
+            </div>
+        </div>
+        <button id="nextButton">Next</button>
+      </div>
+
+      <div class="cardScene2" id="cardSceneId2" style="display: none;" >
+        <div class="personCard">
+            <img src="images/maarit.png" alt="Maarit">
+            <div class="textInfo">
+                <p><b>Maarit.</b> <br>
+                <i>Toimii kouluttajana  ja opinto-ohjaajana Yhteiset palvelut-ryhmässä. Työtehtäviini kuuluu kouluttamisen lisäksi monipuolinen opiskelijoiden ohjaaminen.</i></p>
+            </div>
+        </div>
+        <div class="personCard">
+            <img src="images/olli.png" alt="Olli">
+            <div class="textInfo">
+                <p><b>Olli.</b> <br>
+                <i>Toimii Taitotalon ICT-ja mediayksikössä kouluttajana media-alan ja kuvallisen ilmaisun perustutkinnon peligrafiikan opinnoissa.</i></p>
+            </div>
+        </div>
+        <div class="personCard">
+            <img src="images/taitotalo.png" alt="Taitotalo">
+            <div class="textInfo">
+                <p><b>Taitotalo.</b> <br>
+                <i>Taitotalon logo.</i></p>
+            </div>
+        </div>
+        <div class="personCard">
+            <img src="images/heidi.png" alt="Heidi">
+            <div class="textInfo">
+                <p><b>Heidi.</b> <br>
+                <i>Toimii pelialan kouluttajana Taitotalon ICT- ja mediayksikössä. Osaamisensa kuuluu mm. Blender ja Photoshop.</i></p>
+            </div>
+        </div>
+        <button id="startGameBtn">Ready to start the game!</button>
+      </div>
+
     <div class="game" style="display: none;">
     <!-- Game area-->
     <div class="tiles"></div>

@@ -1,15 +1,34 @@
 // Get elements from the DOM
 const menu = document.querySelector('.startMenu');
 const game = document.querySelector('.game');
+const cardScene1 = document.querySelector('.cardScene1');
+const cardScene2 = document.querySelector('.cardScene2');
+
 const startButton = document.getElementById('startBtn');
+const nextButton = document.getElementById('nextButton');
+const startGameButton = document.getElementById('startGameBtn');
 
-function startGame() {
-  // Hide the menu and display the game
-  menu.style.display = 'none';
-  game.style.display = 'block';
-}
+startButton.addEventListener('click', () => {
+    menu.style.display = 'none';
+    cardScene1.style.display = 'block';
+    cardScene2.style.display = 'none';
+    game.style.display = 'none';
+});
 
-startButton.addEventListener('click', startGame);
+nextButton.addEventListener('click', () => {
+    menu.style.display = 'none';
+    cardScene1.style.display = 'none';
+    cardScene2.style.display = 'block';
+    game.style.display = 'none';
+});
+
+
+startGameButton.addEventListener('click', () => {
+    menu.style.display = 'none';
+    cardScene1.style.display = 'none';
+    cardScene2.style.display = 'none';
+    game.style.display = 'block';
+});
 
 const tilesContainer = document.querySelector(".tiles");
 const images = ['images/christian.png', 'images/heidi.png', 'images/karoliina.png', 'images/kerttuli.png', 'images/lauri.png', 'images/maarit.png', 'images/olli.png', 'images/taitotalo.png'];
@@ -37,6 +56,7 @@ let activeTile = null;
 the user is waiting for the two unmatched tiles to be turned over again */
 let awaitingEndOfMove = false;
 let awaitingAnswer = false;
+
 
 function buildTile(imageSrc) {
     const element = document.createElement("div");
